@@ -470,7 +470,7 @@ def read_data():
     # print(usr)
     # print(d)
     if d and d.get("userquery", -1) == 1:
-        par = mongo.db.abcd.find({}, {"_id": 0, "username": 1})
+        par = mongo.db.abcd.find({}, {"_id": 0, "rideId": 1})
     else:
         par = mongo.db.abcd.find(d, {"_id": 0})
     # print(dumps(par))

@@ -297,7 +297,6 @@ def count_no_of_rides():
         # print(s,resp_send.content)
         res = json.loads(resp_send.content)
         print(res)
-        return jsonify(res)
         res1 = jsonify(res)
         # print(type(res),type(res[0]))
         resl=0

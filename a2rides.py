@@ -291,7 +291,7 @@ def details_of_rides(rideId):
 #         # return "Deleted"
 
 
-@app.route('/api/rides/count', methods=['PUT', 'GET', 'DELETE', 'HEAD'])
+@app.route('/api/v1/rides/count', methods=['PUT', 'GET', 'DELETE', 'HEAD'])
 def count_no_of_rides():
     print("hey")
     cou1=mongo.db.abcd.find({},{"_id":0,"count":1})

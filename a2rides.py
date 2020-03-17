@@ -300,16 +300,12 @@ def count_no_of_rides():
         res1 = jsonify(res)
         # print(type(res),type(res[0]))
         resl=0
-        qres = []
         for i in res:
             if (i):
                 resl+=1
 
         # for i in res:
         #     print(i)
-        if len(qres) == 0:
-            return jsonify({}), 204
-        qres=len(qres)
         res2 = jsonify(resl)
         return res2
     else:

@@ -77,7 +77,7 @@ def create_new_ride():
         print("source", data['source'], type(data['source']))
         print("destination", data['destination'], type(data['destination']))
         resp_send = requests.post(
-            "http://34.194.124.13:80/api/v1/db/read", json=usrd)
+            "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/db/read", json=usrd)
         print(resp_send.content)
         s = dumps(resp_send.content)
         print(s)

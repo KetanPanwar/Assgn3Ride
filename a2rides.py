@@ -39,6 +39,7 @@ mongo = PyMongo(app)
 #         mongo.db.abcd.insert_one(req_data)
 #         return "Inserted"
 
+mongo.db.abcd.insert_one({"count":0})
 
 @app.route('/api/v1/db/temp', methods=['POST'])
 def read_data1():
@@ -60,6 +61,13 @@ def read_data1():
 
 @app.route('/api/v1/rides', methods=['PUT', 'POST', 'DELETE', 'HEAD'])
 def create_new_ride():
+    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
+        res = json.loads(dumps(cou1))
+        for i in res:
+            if (i):
+                cou=i["count"]
+        print("inside create ride",res,cou)
+        mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
     if request.method == 'POST':
         global ride_id
         ride_id += 1
@@ -76,14 +84,18 @@ def create_new_ride():
         print("timestamp", data['timestamp'])
         print("source", data['source'], type(data['source']))
         print("destination", data['destination'], type(data['destination']))
-        resp_send = requests.post(
-            "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/db/read", json=usrd)
-        print(resp_send.content)
-        s = dumps(resp_send.content)
-        print(s)
-        res = json.loads(s)
-        print(res, len(res))
-        if(resp_send.status_code == 200):
+        resp_send = requests.get(
+             "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/users")
+        d=json.loads(resp_send.content)
+#         resp_send = requests.post(
+#             "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/db/read", json=usrd)
+#         print(resp_send.content)
+#         s = dumps(resp_send.content)
+#         print(s)
+#         res = json.loads(s)
+#         print(res, len(res))
+#         if(resp_send.status_code == 200):
+        if (usr in d):
             print("entered 200")
             times = data["timestamp"]
             source = data["source"]
@@ -135,6 +147,13 @@ def create_new_ride():
 @app.route('/api/v1/rides', methods=['PUT', 'GET', 'DELETE', 'HEAD'])
 def display_up_rides():
     print("hey")
+    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
+        res = json.loads(dumps(cou1))
+        for i in res:
+            if (i):
+                cou=i["count"]
+        print("inside create ride",res,cou)
+        mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
 
     if request.method == 'GET':
         source = request.args.get('source')
@@ -186,6 +205,13 @@ def display_up_rides():
 
 @app.route('/api/v1/rides/<rideId>', methods=['PUT', 'GET', 'POST', 'DELETE', 'HEAD'])
 def details_of_rides(rideId):
+    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
+        res = json.loads(dumps(cou1))
+        for i in res:
+            if (i):
+                cou=i["count"]
+        print("inside create ride",res,cou)
+        mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
     if request.method == 'GET':
         data = {"rideId": int(rideId)}
         resp_send = requests.post(
@@ -262,6 +288,93 @@ def details_of_rides(rideId):
 #         return s
 #         # return jsonify(par)
 #         # return "Deleted"
+
+
+@app.route('/api/rides/count', methods=['PUT', 'GET', 'DELETE', 'HEAD'])
+def count_no_of_rides():
+    print("hey")
+    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
+        res = json.loads(dumps(cou1))
+        for i in res:
+            if (i):
+                cou=i["count"]
+        print("inside create ride",res,cou)
+        mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
+
+    if request.method == 'GET':
+        data = {"userquery": 1}
+        resp_send = requests.post(
+            "http://52.203.103.216:80/api/v1/db/read", json=data)
+        s = dumps(resp_send.content)
+        print(s)
+        # print(s,resp_send.content)
+        res = json.loads(resp_send.content)
+        print(res)
+        res1 = jsonify(res)
+        # print(type(res),type(res[0]))
+
+        qres = []
+        for i in res:
+            if (i):
+                qres.append(i['rideId'])
+
+        # for i in res:
+        #     print(i)
+        if len(qres) == 0:
+            return jsonify({}), 204
+        qres=len(qres)
+        res2 = jsonify(qres)
+        return res2
+    else:
+        return jsonify({}), 405
+    
+    
+@app.route('/api/v1/_count', methods=['PUT', 'GET', 'HEAD'])
+def get_request_count():
+    print("hey")
+
+    if request.method == 'GET':
+        cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
+        res = json.loads(dumps(cou1))
+        for i in res:
+            if (i):
+                cou=i["count"]
+        res2 = jsonify(cou)
+        return res2
+    else:
+        return jsonify({}), 405
+
+@app.route('/api/v1/_count', methods=['PUT', 'GET', 'DELETE', 'HEAD'])
+def reset_request_count():
+    print("hey")
+
+    if request.method == 'DELETE':
+        cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
+        res = json.loads(dumps(cou1))
+        for i in res:
+            if (i):
+                cou=i["count"]
+        print("inside create ride",res,cou)
+        mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":0}})
+        return jsonify({}),201
+    else:
+        return jsonify({}), 405
+
+
+
+@app.route('/api/v1/showdbsown', methods=['PUT', 'GET', 'HEAD'])
+def get_all_entries():
+    print("hey")
+
+    if request.method == 'GET':
+        cou1=mongo.db.abcd.find()
+        res = json.loads(dumps(cou1))
+        res2 = jsonify(res)
+        return res2
+    else:
+        return jsonify({}), 405    
+    
+
 
 
 @app.route('/api/v1/db/write', methods=['POST', 'DELETE'])

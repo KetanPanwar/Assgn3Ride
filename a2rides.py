@@ -39,7 +39,17 @@ mongo = PyMongo(app)
 #         mongo.db.abcd.insert_one(req_data)
 #         return "Inserted"
 
-mongo.db.abcd.insert_one({"count":0})
+def coun():
+    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
+    res = json.loads(dumps(cou1))
+    cou=-1
+    for i in res:
+        if (i):
+            cou=i["count"]
+    if cou==-1:
+        mongo.db.abcd.insert_one({"count":1})
+    else:
+        mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
 
 
 @app.route('/api/v1/db/temp', methods=['POST'])
@@ -62,13 +72,7 @@ def read_data1():
 
 @app.route('/api/v1/rides', methods=['PUT', 'POST', 'DELETE', 'HEAD'])
 def create_new_ride():
-    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
-    res = json.loads(dumps(cou1))
-    for i in res:
-        if (i):
-            cou=i["count"]
-    print("inside create ride",res,cou)
-    mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
+    coun()
     if request.method == 'POST':
         global ride_id
         ride_id += 1
@@ -148,13 +152,7 @@ def create_new_ride():
 @app.route('/api/v1/rides', methods=['PUT', 'GET', 'DELETE', 'HEAD'])
 def display_up_rides():
     print("hey")
-    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
-    res = json.loads(dumps(cou1))
-    for i in res:
-        if (i):
-            cou=i["count"]
-    print("inside create ride",res,cou)
-    mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
+    coun()
 
     if request.method == 'GET':
         source = request.args.get('source')
@@ -206,13 +204,7 @@ def display_up_rides():
 
 @app.route('/api/v1/rides/<rideId>', methods=['PUT', 'GET', 'POST', 'DELETE', 'HEAD'])
 def details_of_rides(rideId):
-    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
-    res = json.loads(dumps(cou1))
-    for i in res:
-        if (i):
-            cou=i["count"]
-    print("inside create ride",res,cou)
-    mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
+    coun()
     if request.method == 'GET':
         data = {"rideId": int(rideId)}
         resp_send = requests.post(
@@ -294,13 +286,7 @@ def details_of_rides(rideId):
 @app.route('/api/v1/rides/count', methods=['PUT', 'GET', 'DELETE', 'HEAD'])
 def count_no_of_rides():
     print("hey")
-    cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
-    res = json.loads(dumps(cou1))
-    for i in res:
-        if (i):
-            cou=i["count"]
-    print("inside create ride",res,cou)
-    mongo.db.abcd.find_and_modify(query={"count":cou},update={"$set" : {"count":cou+1}})
+    coun()
 
     if request.method == 'GET':
         data = {"userquery": 1}

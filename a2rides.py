@@ -39,7 +39,7 @@ mongo = PyMongo(app)
 #         mongo.db.abcd.insert_one(req_data)
 #         return "Inserted"
 
-mongo.db.abcd.insert_one({"count":0})
+#mongo.db.abcd.insert_one({"count":0})
 
 
 @app.route('/api/v1/db/temp', methods=['POST'])

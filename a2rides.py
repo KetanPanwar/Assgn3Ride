@@ -291,7 +291,7 @@ def count_no_of_rides():
     if request.method == 'GET':
         data = {"userquery": 1}
         resp_send = requests.post(
-            "http://localhost:5000/api/v1/db/read", json=data)
+            "http://52.203.103.216:80/api/v1/db/read", json=data)
         s = dumps(resp_send.content)
         print(s)
         # print(s,resp_send.content)

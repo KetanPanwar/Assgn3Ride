@@ -91,7 +91,7 @@ def create_new_ride():
         print("destination", data['destination'], type(data['destination']))
         resp_send = requests.get(
              "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/users",
-    headers={'Origin': 52.203.103.216},)
+    headers={'Origin': '52.203.103.216'},)
         d=json.loads(resp_send.content)
 #         resp_send = requests.post(
 #             "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/db/read", json=usrd)

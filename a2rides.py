@@ -124,7 +124,9 @@ def create_new_ride():
             if time_s < datetime.now():
                 print("times less")
                 return jsonify({}), 400
-            if(type(source) == int and type(destination) == int and source >= 1 and source <= n_places and destination >= 1 and destination <= n_places and source != destination):
+            source=int(source)
+            destination=int(destination)
+            if( source >= 1 and source <= n_places and destination >= 1 and destination <= n_places and source != destination):
                 sourced = dataset[source][1]
                 destinationd = dataset[destination][1]
                 print("sd", source, destination, sourced, destinationd)

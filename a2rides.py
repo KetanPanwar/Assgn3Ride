@@ -92,16 +92,17 @@ def create_new_ride():
         resp_send = requests.get(
              "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/users",
     headers={'Origin': '52.203.103.216'},)
-        # d=json.loads(resp_send.content)
-        resp_send = requests.post(
-            "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/db/read", json=usrd)
-        print(resp_send.content)
-        s = dumps(resp_send.content)
-        print(s)
-        res = json.loads(s)
-        print(res, len(res))
-        if(resp_send.status_code == 200):
-        # if (usr in d):
+        d=json.loads(resp_send.content)
+        response = resp_send.json()
+        # resp_send = requests.post(
+        #     "http://Assignment3-1703098.us-east-1.elb.amazonaws.com:80/api/v1/db/read", json=usrd)
+        # print(resp_send.content)
+        # s = dumps(resp_send.content)
+        # print(s)
+        # res = json.loads(s)
+        # print(res, len(res))
+        # if(resp_send.status_code == 200):
+        if (usr in response):
             print("entered 200")
             times = data["timestamp"]
             source = data["source"]

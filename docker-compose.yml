@@ -6,6 +6,6 @@ services:
     image: rides:latest
     ports:
       - 80:5050
-    env:
+    environment:
       - TEAM_NAME=CC_0195_0309
     

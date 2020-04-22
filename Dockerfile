@@ -13,4 +13,4 @@ COPY . /app
 
 EXPOSE 5050
 
-CMD ["python3","a2rides.py"]
+CMD ["python3","CC_0195_0309_rides.py"]

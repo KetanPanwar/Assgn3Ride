@@ -173,8 +173,9 @@ def display_up_rides():
 		# print(s,resp_send.content)
 		res = json.loads(resp_send.content)
 		print(res)
-		res=json.loads(res)
-		res1 = jsonify(res)
+		if res:
+			res=json.loads(res)
+			res1 = jsonify(res)
 		# print(type(res),type(res[0]))
 
 		def datet(s):
@@ -251,11 +252,10 @@ def details_of_rides(rideId):
 			od["method"]='post'
 			d = json.loads(resp_send1.content)
 			d=json.loads(d)
-			
 			print(d,type(d))
 
 			# return d['users']
-			if usr["username"] not in d["users"]:
+			if usr["username"] not in d[0]["users"]:
 				resp_send = requests.post(
 					"http://18.210.117.50:80/api/v1/db/write", json=od)
 				print(resp_send.status_code)

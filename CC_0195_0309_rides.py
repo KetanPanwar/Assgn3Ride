@@ -44,7 +44,7 @@ def coun():
 	data['op']='coun'
 	data['method']='post'
 	data['who']='rides'
-	resp_send = requests.post("http://18.210.117.50:80/api/v1/db/write", json=data)
+	resp_send = requests.post("http://52.72.92.96:80/api/v1/db/write", json=data)
 	# cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
 	# res = json.loads(dumps(cou1))
 	# cou=-1
@@ -135,7 +135,7 @@ def create_new_ride():
 			fata["method"]="post"
 			fata["who"]="rides"
 			resp_send = requests.post(
-				"http://18.210.117.50:80/api/v1/db/write", json=fata)
+				"http://52.72.92.96:80/api/v1/db/write", json=fata)
 			print("recieved")
 			return jsonify({}), 201
 		else:
@@ -167,7 +167,7 @@ def display_up_rides():
 		print(source, destination)
 		data['who']='rides'
 		resp_send = requests.post(
-			"http://18.210.117.50:80/api/v1/db/read", json=data)
+			"http://52.72.92.96:80/api/v1/db/read", json=data)
 		s = dumps(resp_send.content)
 		print(s)
 		# print(s,resp_send.content)
@@ -209,7 +209,7 @@ def details_of_rides(rideId):
 		data = {"rideId": int(rideId)}
 		data['who']='rides'
 		resp_send = requests.post(
-			"http://18.210.117.50:80/api/v1/db/read", json=data)
+			"http://52.72.92.96:80/api/v1/db/read", json=data)
 		s = dumps(resp_send.content)
 		# print(s,resp_send.content)
 		res = json.loads(resp_send.content)
@@ -238,10 +238,10 @@ def details_of_rides(rideId):
 		data1 = {"rideId": int(rideId)}
 		# print("ent",type(data1))
 		usr['who']='users'
-		resp_send = requests.post("http://18.210.117.50:80/api/v1/db/read", json=usr)
+		resp_send = requests.post("http://52.72.92.96:80/api/v1/db/read", json=usr)
 		data1["who"]='rides'
 		resp_send1 = requests.post(
-			"http://18.210.117.50:80/api/v1/db/read", json=data1)
+			"http://52.72.92.96:80/api/v1/db/read", json=data1)
 		if(resp_send.status_code == 200 and resp_send1.status_code == 200):
 			od = OrderedDict()
 			od["rideId"] = int(rideId)
@@ -257,7 +257,7 @@ def details_of_rides(rideId):
 			# return d['users']
 			if usr["username"] not in d[0]["users"]:
 				resp_send = requests.post(
-					"http://18.210.117.50:80/api/v1/db/write", json=od)
+					"http://52.72.92.96:80/api/v1/db/write", json=od)
 				print(resp_send.status_code)
 				return jsonify({}), 200
 			else:
@@ -268,7 +268,7 @@ def details_of_rides(rideId):
 		data = {"rideId": int(rideId)}
 		data["who"]='rides'
 		resp_send1 = requests.post(
-			"http://18.210.117.50:80/api/v1/db/read", json=data)
+			"http://52.72.92.96:80/api/v1/db/read", json=data)
 		if resp_send1.status_code == 400:
 			return jsonify({}), 400
 		elif (resp_send1.status_code == 200):
@@ -277,7 +277,7 @@ def details_of_rides(rideId):
 			data['op']='write'
 			data["method"]='delete'
 			resp_send = requests.delete(
-				"http://18.210.117.50:80/api/v1/db/write", json=data)
+				"http://52.72.92.96:80/api/v1/db/write", json=data)
 			return jsonify({}), resp_send.status_code
 
 	else:
@@ -307,7 +307,7 @@ def count_no_of_rides():
 		data = {"userquery": 1}
 		data["who"]="rides"
 		resp_send = requests.post(
-			"http://18.210.117.50:80/api/v1/db/read", json=data)
+			"http://52.72.92.96:80/api/v1/db/read", json=data)
 		s = dumps(resp_send.content)
 		print(s)
 		# print(s,resp_send.content)
@@ -338,7 +338,7 @@ def get_request_count():
 		data['who']='rides'
 		data['readcou']=1
 		resp_send = requests.post(
-			"http://18.210.117.50:80/api/v1/db/read", json=data)
+			"http://52.72.92.96:80/api/v1/db/read", json=data)
 		res = json.loads(resp_send.content)
 		# res=json.loads(res)
 		return jsonify([res]), 200
@@ -365,7 +365,7 @@ def reset_request_count():
 		data['op']='reset'
 		data['method']='post'
 		data['who']='rides'
-		resp_send = requests.post("http://18.210.117.50:80/api/v1/db/write", json=data)
+		resp_send = requests.post("http://52.72.92.96:80/api/v1/db/write", json=data)
 
 
 		# cou1=mongo.db.abcd.find({},{"_id":0,"count":1})
@@ -392,7 +392,7 @@ def get_all_entries():
 		data['who']='rides'
 		data['entire']=1
 		resp_send = requests.post(
-			"http://18.210.117.50:80/api/v1/db/read", json=data)
+			"http://52.72.92.96:80/api/v1/db/read", json=data)
 		res = json.loads(resp_send.content)
 		res=json.loads(res)
 		return jsonify(res)
@@ -536,7 +536,7 @@ def clear_data():
 	data['op']='clear'
 	data['who']='rides'
 	resp_send = requests.post(
-			"http://18.210.117.50:80/api/v1/db/clear", json=data)
+			"http://52.72.92.96:80/api/v1/db/clear", json=data)
 	# res = json.loads(resp_send.content)
 		# res=json.loads(res)
 	return jsonify({}), 200
